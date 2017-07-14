@@ -5,37 +5,43 @@
 <body>
     <script src="d3.js" charset="utf-8"></script>
     <script>
-        d3.csv("who.csv", function(who) {
-    console.log(who);
+   var svg = d3.select("svg"),
+    margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = +svg.attr("width") - margin.left - margin.right,
+    height = +svg.attr("height") - margin.top - margin.bottom;
+var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+    y = d3.scaleLinear().rangeRound([height, 0]);
+var g = svg.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+d3.tsv("count.tsv", function(d) {
+  d.frequency = +d.frequency;
+  return d;
+}, function(error, data) {
+  if (error) throw error;
+  x.domain(data.map(function(d) { return d.letter; }));
+  y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+  g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+  g.append("g")
+      .attr("class", "axis axis--y")
+      .call(d3.axisLeft(y).ticks(10, "%"))
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", "0.71em")
+      .attr("text-anchor", "end")
+      .text("Frequency");
+  g.selectAll(".bar")
+    .data(data)
+    .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d.letter); })
+      .attr("y", function(d) { return y(d.frequency); })
+      .attr("width", x.bandwidth())
+      .attr("height", function(d) { return height - y(d.frequency); });
 });
-                d3.csv("count.csv", function(count) {
-    console.log(count);
-});
-        var width = 300;	//画布的宽度
-        var height = 300;	//画布的高度
-
-        var svg = d3.select("body")				//选择文档中的body元素
-            .append("svg")				//添加一个svg元素
-            .attr("width", width)		//设定宽度
-            .attr("height", height);	//设定高度
-
-        var dataset = [250, 210, 170, 130, 90];
-
-        var rectHeight = 25;	//每个矩形所占的像素高度(包括空白)
-
-        svg.selectAll("rect")
-            .data(dataset)
-            .enter()
-            .append("rect")
-            .attr("x", 20)
-            .attr("y", function (d, i) {
-                return i * rectHeight;
-            })
-            .attr("width", function (d) {
-                return d;
-            })
-            .attr("height", rectHeight - 2)
-            .attr("fill", "steelblue");
 
     </script>
 
