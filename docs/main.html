@@ -30,10 +30,10 @@ var margin = {top: 20, right: 30, bottom: 40, left: 30},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-var x = d3.scaleLinear()
+var scaleX  = d3.scaleLinear()
     .range([0, width]);
 
-var y = d3.scaleOrdinal()
+var scaleY = d3.scaleOrdinal()
     .range([0, height], 0.1);
 
 var xAxis = d3.svg.axis()
