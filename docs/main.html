@@ -6,7 +6,9 @@
 <body>
     <script src="d3.js" charset="utf-8"></script>
     <script>
-
+        d3.csv("who.csv", function(data) {
+    console.log(data);
+});
         var width = 300;	//画布的宽度
         var height = 300;	//画布的高度
 
