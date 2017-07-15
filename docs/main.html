@@ -1,10 +1,10 @@
-﻿<html>
+<html>
 <head>
     <meta charset="utf-8">
 </head>
 <body>
     
-        <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script>
             var s = d3.select('body')
                 .append('svg')
@@ -91,11 +91,11 @@
                 .duration(1500)
                 .attr({
                     'x': function (d) {
-                        return d['count'][0]/100 + 160;
+                        return d['count'][0]/100 + 260;
                     }
                 })
                 .tween('number', function (d) {
-                    var i = d3.interpolateRound(150, d['count'][0]/100+150);
+                    var i = d3.interpolateRound(0, d['count'][0]/100);
                     return function (t) {
                         this.textContent = i(t);
                     };
