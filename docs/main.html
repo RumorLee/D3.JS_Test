@@ -39,7 +39,7 @@
 
             console.log(data)
 
-            s.selectAll()
+            s.selectAll('name')
                 .data(data)
                 .enter()
                 .append('text')
@@ -75,7 +75,7 @@
                     }
                 });
 
-            s.selectAll()
+            s.selectAll('count')
                 .data(data)
                 .enter()
                 .append('text')
